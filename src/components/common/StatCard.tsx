@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography, Box, Skeleton } from '@mui/material';
-import { TrendingUp, TrendingDown } from '@mui/icons-material';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 
 interface StatCardProps {
   title: string;
@@ -23,10 +23,10 @@ export const StatCard = ({ title, value, change, changeLabel = 'vs last period',
           <Typography variant="body2" color="text.secondary">{title}</Typography>
           {icon && <Box sx={{ color, p: 1, borderRadius: 1, bgcolor: `${color}15` }}>{icon}</Box>}
         </Box>
-        <Typography variant="h4" fontWeight={600} gutterBottom>{value}</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 600 }} gutterBottom>{value}</Typography>
         {change !== undefined && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            {isPositive ? <TrendingUp sx={{ fontSize: 16, color: 'success.main' }} /> : <TrendingDown sx={{ fontSize: 16, color: 'error.main' }} />}
+            {isPositive ? <TrendingUp size={16} color="#2e7d32" /> : <TrendingDown size={16} color="#d32f2f" />}
             <Typography variant="body2" sx={{ color: isPositive ? 'success.main' : 'error.main', fontWeight: 500 }}>
               {isPositive ? '+' : ''}{change.toFixed(1)}%
             </Typography>
@@ -37,3 +37,4 @@ export const StatCard = ({ title, value, change, changeLabel = 'vs last period',
     </Card>
   );
 };
+

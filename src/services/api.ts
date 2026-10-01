@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from '../constants';
 // API Service Layer - Ready for integration
 // TODO: Implement actual API calls with axios or fetch
 
-const BASE_URL = '/api'; // Configure based on environment
+export const BASE_URL = '/api'; // Configure based on environment
 
 interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -16,7 +16,9 @@ const apiClient = {
   request: async <T>(endpoint: string, options: RequestOptions = {}): Promise<T> => {
     const { method = 'GET', headers = {}, body } = options;
     // TODO: Implement actual fetch/axios call
-    console.log(`API ${method} ${endpoint}`, body);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[API ${method}] ${BASE_URL}${endpoint}`, { headers, body });
+    }
     return Promise.resolve({} as T);
   },
   get: <T>(endpoint: string) => apiClient.request<T>(endpoint),
@@ -39,7 +41,7 @@ export const authService = {
 };
 
 export const productService = {
-  getAll: (params?: { page?: number; limit?: number; search?: string; category?: string; status?: string }) => apiClient.get(API_ENDPOINTS.PRODUCTS),
+  getAll: (_params?: { page?: number; limit?: number; search?: string; category?: string; status?: string }) => apiClient.get(API_ENDPOINTS.PRODUCTS),
   getById: (id: string) => apiClient.get(`${API_ENDPOINTS.PRODUCTS}/${id}`),
   create: (data: any) => apiClient.post(API_ENDPOINTS.PRODUCTS, data),
   update: (id: string, data: any) => apiClient.put(`${API_ENDPOINTS.PRODUCTS}/${id}`, data),
@@ -47,13 +49,13 @@ export const productService = {
 };
 
 export const orderService = {
-  getAll: (params?: { page?: number; limit?: number; search?: string; status?: string }) => apiClient.get(API_ENDPOINTS.ORDERS),
+  getAll: (_params?: { page?: number; limit?: number; search?: string; status?: string }) => apiClient.get(API_ENDPOINTS.ORDERS),
   getById: (id: string) => apiClient.get(`${API_ENDPOINTS.ORDERS}/${id}`),
   updateStatus: (id: string, status: string) => apiClient.put(`${API_ENDPOINTS.ORDERS}/${id}/status`, { status }),
 };
 
 export const customerService = {
-  getAll: (params?: { page?: number; limit?: number; search?: string; status?: string }) => apiClient.get(API_ENDPOINTS.CUSTOMERS),
+  getAll: (_params?: { page?: number; limit?: number; search?: string; status?: string }) => apiClient.get(API_ENDPOINTS.CUSTOMERS),
   getById: (id: string) => apiClient.get(`${API_ENDPOINTS.CUSTOMERS}/${id}`),
 };
 
@@ -65,7 +67,7 @@ export const categoryService = {
 };
 
 export const inventoryService = {
-  getAll: (params?: { page?: number; limit?: number; status?: string }) => apiClient.get(API_ENDPOINTS.INVENTORY),
+  getAll: (_params?: { page?: number; limit?: number; status?: string }) => apiClient.get(API_ENDPOINTS.INVENTORY),
   updateStock: (id: string, quantity: number) => apiClient.put(`${API_ENDPOINTS.INVENTORY}/${id}`, { quantity }),
 };
 
@@ -80,3 +82,4 @@ export const settingsService = {
   get: () => apiClient.get(API_ENDPOINTS.SETTINGS),
   update: (data: any) => apiClient.put(API_ENDPOINTS.SETTINGS, data),
 };
+

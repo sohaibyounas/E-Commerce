@@ -38,10 +38,11 @@ const authSlice = createSlice({
     updateUser: (state, action: PayloadAction<Partial<User>>) => { if (state.user) state.user = { ...state.user, ...action.payload }; },
   },
   // Add async thunks for login, register, etc.
-  extraReducers: (builder) => {
+  extraReducers: (_builder) => {
     // TODO: Add async thunk handlers
   },
 });
 
 export const { loginStart, loginSuccess, loginFailure, logout, updateUser } = authSlice.actions;
 export default authSlice.reducer;
+

@@ -1,5 +1,5 @@
 import { TextField, InputAdornment } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { Search } from 'lucide-react';
 
 interface SearchInputProps {
   value: string;
@@ -14,8 +14,14 @@ export const SearchInput = ({ value, onChange, placeholder = 'Search...', size =
     placeholder={placeholder}
     value={value}
     onChange={(e) => onChange(e.target.value)}
-    InputProps={{
-      startAdornment: <InputAdornment position="start"><Search sx={{ color: 'text.disabled' }} /></InputAdornment>,
+    slotProps={{
+      input: {
+        startAdornment: (
+          <InputAdornment position="start">
+            <Search size={18} color="#CC6F00" />
+          </InputAdornment>
+        ),
+      },
     }}
     sx={{ minWidth: 200 }}
   />
